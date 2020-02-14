@@ -1,6 +1,8 @@
 package com.example.aspectdemo.controller;
 
 import com.example.aspectdemo.exceptions.AspectDemoException;
+import com.example.aspectdemo.logging.AfterThrowingLog;
+import com.example.aspectdemo.logging.AroundLog;
 import com.example.aspectdemo.service.AspectDemoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +19,12 @@ public class AspectDemoController {
         this.aspectDemoService = aspectDemoService;
     }
 
-    @RequestMapping(value = "/bay/seq-data/{choice}", method = RequestMethod.GET, produces = {"application/json"})
+    @AroundLog
+    @AfterThrowingLog
+    @RequestMapping(value = "/message/{choice}", method = RequestMethod.GET, produces = {"application/json"})
     @ResponseBody
-    public ResponseEntity<?> getEmployeeData(@PathVariable(value = "choice") Integer choice) {
-        String errorMessage = "EmployeeData controller failed";
+    public ResponseEntity<?> getMessage(@PathVariable(value = "choice") Integer choice) {
+        String errorMessage = "Aspect Message controller failed";
         try {
             return ResponseEntity.ok().body(aspectDemoService.getEmployee(choice));
         } catch (AspectDemoException ade) {
