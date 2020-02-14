@@ -12,7 +12,6 @@ public class AspectDemoException extends Throwable {
 
     public AspectDemoException(ResponseCodeTO responseTO) {
         super(responseTO.getMessage());
-
         this.responseTO = responseTO;
     }
 

@@ -20,36 +20,32 @@ public class LoggingAspect {
 
     /**
      *
-     * @param point
-     *            - joinpoint
-     * @param aroundLog
-     *            - annotation
+     * @param point - joinpoint
      * @return - returns the method return value
-     * @throws Throwable
+     * @throws - Throwable
      */
 
     @Around("execution(public * *(..)) && @annotation(AroundLog)")
     public Object around(ProceedingJoinPoint point) throws Throwable {
         long start = System.currentTimeMillis();
         Logger log = LoggerFactory.getLogger(point.getSignature().getDeclaringType().getName());
-        Long duration = System.currentTimeMillis() - start;
+        long duration = System.currentTimeMillis() - start;
         Object result = point.proceed();
 
         Signature signature = point.getSignature();
         String arguments = Arrays.toString(point.getArgs());
         log.info("method=" + signature.getName() + ",class=" + point.getTarget().getClass().getSimpleName()
                 + ",request=" + arguments + ",response=" + (result != null ? result.toString() : null)
-                + ",executionTime=" + duration.toString());
+                + ",executionTime=" + duration);
         return result;
     }
 
     /**
      *
-     * @param point
-     * @param beforeLog
+     * @param point - joinpoint
      */
-    @Before("execution(public * *(..)) && @annotation(beforeLog)")
-    public void before(JoinPoint point, BeforeLog beforeLog) {
+    @Before("execution(public * *(..)) && @annotation(BeforeLog)")
+    public void before(JoinPoint point) {
 
         Logger log = LoggerFactory.getLogger(point.getSignature().getDeclaringType().getName());
         logMethod(log, point);
@@ -58,11 +54,10 @@ public class LoggingAspect {
 
     /**
      *
-     * @param point
-     * @param afterLog
+     * @param point - joinpoint
      */
-    @After("execution(public * *(..)) && @annotation(afterLog)")
-    public void after(JoinPoint point, AfterLog afterLog) {
+    @After("execution(public * *(..)) && @annotation(AfterLog)")
+    public void after(JoinPoint point) {
 
         Logger log = LoggerFactory.getLogger(point.getSignature().getDeclaringType().getName());
 
@@ -72,8 +67,8 @@ public class LoggingAspect {
 
     /**
      *
-     * @param joinPoint
-     * @param afterReturningLog
+     * @param joinPoint - joinpoint
+     * @param afterReturningLog - Annotation
      */
     @AfterReturning("execution(public * *(..)) && @annotation(afterReturningLog)")
     public void afterReturning(JoinPoint joinPoint, AfterReturningLog afterReturningLog) {
@@ -82,8 +77,8 @@ public class LoggingAspect {
 
     /**
      *
-     * @param log
-     * @param point
+     * @param log - logger
+     * @param point - joinpoint
      */
     private void logMethod(Logger log, JoinPoint point) {
         long start = System.currentTimeMillis();
@@ -92,9 +87,9 @@ public class LoggingAspect {
         String arguments = Arrays.toString(point.getArgs());
         log.info("method: " + methodName + " with arguments " + arguments);
 
-        Long duration = System.currentTimeMillis() - start;
+        long duration = System.currentTimeMillis() - start;
         log.info("method=" + signature.getName() + ",class=" + point.getTarget().getClass().getSimpleName()
-                + ",request=" + arguments + ",executionTime=" + duration.toString());
+                + ",request=" + arguments + ",executionTime=" + duration);
 
     }
 }

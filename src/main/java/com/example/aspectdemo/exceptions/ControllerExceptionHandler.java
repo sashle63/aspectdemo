@@ -15,19 +15,20 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
-    @ExceptionHandler(HttpClientErrorException.class)
-    public final ResponseEntity<ResponseCodeTO> handleClientErrorException(HttpClientErrorException ex) {
-        ResponseCodeTO to;
-        to = new ResponseCodeTO(ex.getResponseBodyAsString(), ex.getStatusCode(), ReturnCode.EXCEPTION.getCode());
-        return new ResponseEntity<>(to, getJsonHeaders(), ex.getStatusCode());
-    }
 
-    @ExceptionHandler(HttpServerErrorException.class)
-    public final ResponseEntity<ResponseCodeTO> handleServerErrorException(HttpServerErrorException ex) {
-        ResponseCodeTO to;
-        to = new ResponseCodeTO(ex.getMessage(), HttpStatus.BAD_GATEWAY, ReturnCode.EXCEPTION.getCode());
-        return new ResponseEntity<>(to, getJsonHeaders(), HttpStatus.BAD_GATEWAY);
-    }
+//    @ExceptionHandler(HttpClientErrorException.class)
+//    public final ResponseEntity<ResponseCodeTO> handleClientErrorException(HttpClientErrorException ex) {
+//        ResponseCodeTO to;
+//        to = new ResponseCodeTO(ex.getResponseBodyAsString(), ex.getStatusCode(), ReturnCode.EXCEPTION.getCode());
+//        return new ResponseEntity<>(to, getJsonHeaders(), ex.getStatusCode());
+//    }
+//
+//    @ExceptionHandler(HttpServerErrorException.class)
+//    public final ResponseEntity<ResponseCodeTO> handleServerErrorException(HttpServerErrorException ex) {
+//        ResponseCodeTO to;
+//        to = new ResponseCodeTO(ex.getMessage(), HttpStatus.BAD_GATEWAY, ReturnCode.EXCEPTION.getCode());
+//        return new ResponseEntity<>(to, getJsonHeaders(), HttpStatus.BAD_GATEWAY);
+//    }
 
     @ExceptionHandler(AspectDemoException.class)
     public final ResponseEntity<ResponseCodeTO> handleProjectGatewayException(AspectDemoException ex) {

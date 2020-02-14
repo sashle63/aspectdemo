@@ -16,13 +16,13 @@ public class AspectDemoService {
         this.aspectDemoTO = employee;
     }
 
-    public AspectDemoTO getEmployee(Integer option) throws AspectDemoException {
+    public AspectDemoTO getEmployee(Integer option) throws AspectDemoException, Exception {
         AspectDemoTO dummyEmployee = new AspectDemoTO();
         dummyEmployee.setDemoMessage("Number 6: I am a man not a number!");
 
         switch (option) {
             case 1:
-                throw new RuntimeException("Option 1 Runtime exception");
+                throw new Exception("Option 1 Runtime exception");
             case 2:
                 ResponseCodeTO responseCodeTO = new ResponseCodeTO("Call Failed with custon exception", HttpStatus.I_AM_A_TEAPOT, -1);
                 throw new AspectDemoException(responseCodeTO);
